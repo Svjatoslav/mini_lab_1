@@ -177,8 +177,12 @@ class Commands:
 
     def delete_focus(self):
         focus_entry = self.parent_window.entries.focus_entry
-        if focus_entry:
+        if (len(focus_entry.get())==0):
             self.parent_window.entries.delete_entry(focus_entry)
+        else:
+            modal_w = ModalWindow(self.parent_window, title="Empty", labeltext="Дороги назад уже не будет")
+            leave_button = Button(master=modal_w.top, text='Ой ой ой, спасибо', command=modal_w.cancel)
+            modal_w.add_button(leave_button)
 
 
 
@@ -223,8 +227,7 @@ class ModalWindow:
     def cancel(self):
         self.top.destroy()
 
-
-# app class (класс приложения)
+    # app class (класс приложения)
 class App(Tk):
     def __init__(self, buttons, plotter, commands, entries):
         super().__init__()
